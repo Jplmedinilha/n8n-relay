@@ -54,6 +54,22 @@ app.get("/next-event", auth, (req: Request, res: Response) => {
   res.json({ event });
 });
 
+app.get("/", async (req: Request, res: Response) => {
+  const uptimeSeconds: number = process.uptime();
+  const memoryUsage = process.memoryUsage();
+  const cpuUsage = process.cpuUsage();
+
+  return res.status(200).json({
+    CODE: "S",
+    MESSAGE: "MOBIS MES WEB IS RUNNING!",
+    uptime: `${Math.floor(uptimeSeconds)}s`,
+    memory: memoryUsage.rss,
+    cpu: cpuUsage,
+    nodeVersion: process.version,
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // Inicializar servidor
 app.listen(PORT, () =>
   console.log(`Relay OCI rodando em http://0.0.0.0:${PORT}`)
