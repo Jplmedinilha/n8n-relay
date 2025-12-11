@@ -10,10 +10,10 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 const API_TOKEN = process.env.API_TOKEN;
 
-// Fila em memória
+// In memory queue
 let queue: any[] = [];
 
-// Middleware de autenticação
+// auth Middleware
 function auth(req: Request, res: Response, next: NextFunction) {
   const token = req.headers["x-api-token"];
 
@@ -29,7 +29,6 @@ function auth(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-// Rota para adicionar eventos (ex: Telegram → OCI)
 app.post("/add-event", auth, (req: Request, res: Response) => {
   const event = {
     id: Date.now(),
@@ -39,12 +38,11 @@ app.post("/add-event", auth, (req: Request, res: Response) => {
 
   queue.push(event);
 
-  console.log("Novo evento recebido:", event);
+  //   console.log("Novo evento recebido:", event);
 
   res.json({ ok: true });
 });
 
-// Rota para o n8n buscar o próximo evento
 app.get("/next-event", auth, (req: Request, res: Response) => {
   if (queue.length === 0) {
     return res.json({ event: null });
@@ -61,7 +59,7 @@ app.get("/", async (req: Request, res: Response) => {
 
   return res.status(200).json({
     CODE: "S",
-    MESSAGE: "MOBIS MES WEB IS RUNNING!",
+    MESSAGE: "HAEB MES N8N Relay Server is running!",
     uptime: `${Math.floor(uptimeSeconds)}s`,
     memory: memoryUsage.rss,
     cpu: cpuUsage,
