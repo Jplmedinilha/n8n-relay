@@ -18,3 +18,23 @@ Because on-premise n8n cannot directly receive incoming webhooks from the public
 ---
 
 ## 📂 Project Structure
+
+.
+├── src/
+│ └── index.ts
+├── dist/
+├── package.json
+├── tsconfig.json
+├── Dockerfile
+└── .env
+
+---
+
+## 🔧 Configuration
+
+Create a `.env` file:
+
+```env
+SECURITY_TOKEN=your-secret-token-here
+N8N_WEBHOOK_URL=http://your-onprem-n8n/api/webhook
+```
